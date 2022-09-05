@@ -1,12 +1,12 @@
-import NextAuth from "next-auth";
+import NextAuth, { Account, Profile, User } from "next-auth";
 import SpotifyProvider from "next-auth/providers/spotify";
 import spotifyApi, { LOGIN_URL } from "@/lib/spotify";
 import { JWT } from "next-auth/jwt";
 
 async function refreshAccessToken(token: JWT) {
   try {
-    spotifyApi.setAccessToken(token.accessToken as string);
-    spotifyApi.setAccessToken(token.refreshToken as string);
+    spotifyApi.setAccessToken(token.accessToken);
+    spotifyApi.setAccessToken(token.refreshToken);
 
     const { body: refreshedToken } = await spotifyApi.refreshAccessToken();
     return {
@@ -27,9 +27,8 @@ async function refreshAccessToken(token: JWT) {
 export default NextAuth({
   providers: [
     SpotifyProvider({
-      clientId: process.env.NEXT_PUBLIC_CLIENT_ID as string,
-      clientSecret: process.env.NEXT_PUBLIC_CLIENT_SECRET as string,
-      // @ts-ignore
+      clientId: process.env.NEXT_PUBLIC_CLIENT_ID,
+      clientSecret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
       authorization: LOGIN_URL,
     }),
   ],
@@ -38,7 +37,7 @@ export default NextAuth({
     signIn: "/login",
   },
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, account }: any) {
       // Initial sign in
       if (account && user) {
         return {
@@ -46,12 +45,12 @@ export default NextAuth({
           accessToken: account.access_token,
           refreshToken: account.refresh_token,
           username: account.providerAccountId,
-          accessTokenExpires: (account.expires_at as number) * 1000,
+          accessTokenExpires: account.expires_at * 1000,
         };
       }
 
       // Return previous token if the access token has not expired
-      if (Date.now() < <number>token.accessTokenExpires) {
+      if (Date.now() < token.accessTokenExpires) {
         return token;
       }
 
@@ -60,11 +59,8 @@ export default NextAuth({
     },
 
     async session({ session, token }) {
-      // @ts-ignore
       session.user.accessToken = token.accessToken;
-      // @ts-ignore
       session.user.refreshToken = token.refreshToken;
-      // @ts-ignore
       session.user.username = token.username;
 
       return session;
