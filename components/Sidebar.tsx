@@ -13,14 +13,14 @@ const Sidebar = () => {
   const { data: session } = useSession();
 
   return (
-    <div className="text-gray-500 p-5 text-sm border-r border-gray-900">
+    <div className="text-gray-500 p-5 text-sm border-r border-gray-900 overflow-y-scroll scrollbar-hide h-screen">
       <div className="space-y-4">
         {/* First Section */}
-        <button className="flex items-center space-x-2 hover:text-white">
-          <ArrowLeftOnRectangleIcon
-            className="h-5 w-5"
-            onClick={() => signOut()}
-          />
+        <button
+          className="flex items-center space-x-2 hover:text-white"
+          onClick={() => signOut()}
+        >
+          <ArrowLeftOnRectangleIcon className="h-5 w-5" />
           <p>Logout</p>
         </button>
         <button className="flex items-center space-x-2 hover:text-white">
