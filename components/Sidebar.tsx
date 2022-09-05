@@ -5,6 +5,7 @@ import {
   PlusCircleIcon,
   HeartIcon,
   RssIcon,
+  ArrowLeftOnRectangleIcon,
 } from "@heroicons/react/24/outline";
 import { signOut, useSession } from "next-auth/react";
 
@@ -16,9 +17,9 @@ const Sidebar = () => {
       <div className="space-y-4">
         {/* First Section */}
         <button className="flex items-center space-x-2 hover:text-white">
-          <HomeIcon
+          <ArrowLeftOnRectangleIcon
             className="h-5 w-5"
-            onClick={() => signOut({ callbackUrl: "/login" })}
+            onClick={() => signOut()}
           />
           <p>Logout</p>
         </button>
