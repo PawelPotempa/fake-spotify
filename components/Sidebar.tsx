@@ -7,10 +7,25 @@ import {
   RssIcon,
   ArrowLeftOnRectangleIcon,
 } from "@heroicons/react/24/outline";
+import useSpotify from "hooks/useSpotify";
 import { signOut, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 const Sidebar = () => {
   const { data: session } = useSession();
+  const spotifyApi = useSpotify();
+  const [playlist, setPlaylist] = useState<
+    SpotifyApi.PlaylistObjectSimplified[]
+  >([]);
+  const [playlistId, setPlaylistId] = useState("");
+
+  useEffect(() => {
+    if (spotifyApi.getAccessToken()) {
+      spotifyApi.getUserPlaylists().then((data) => {
+        setPlaylist(data.body.items);
+      });
+    }
+  }, [spotifyApi, session]);
 
   return (
     <div className="text-gray-500 p-5 text-sm border-r border-gray-900 overflow-y-scroll scrollbar-hide h-screen">
@@ -53,7 +68,16 @@ const Sidebar = () => {
         <hr className="bordert-[0.1px] border-gray-900" />
 
         {/* Playlists Section */}
-        <p className="cursor-pointer hover:text-white">Playlist name...</p>
+        {playlist &&
+          playlist.map((playlist) => (
+            <p
+              key={playlist.id}
+              className="cursor-pointer hover:text-white"
+              onClick={() => setPlaylistId(playlist.id)}
+            >
+              {playlist.name}
+            </p>
+          ))}
       </div>
     </div>
   );
