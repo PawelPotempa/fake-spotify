@@ -1,7 +1,35 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { randomColor } from "@/lib/utils";
+
+export const colors = [
+  "from-slate-500",
+  "from-gray-500",
+  "from-zinc-500",
+  "from-neutral-500",
+  "from-stone-500",
+  "from-red-500",
+  "from-orange-500",
+  "from-amber-500",
+  "from-yellow-500",
+  "from-lime-500",
+  "from-green-500",
+  "from-emerald-500",
+  "from-teal-500",
+  "from-cyan-500",
+  "from-sky-500",
+  "from-blue-500",
+  "from-indigo-500",
+  "from-violet-500",
+  "from-purple-500",
+  "from-fuchsia-500",
+  "from-pink-500",
+  "from-rose-500",
+];
+
+export const randomColor = () => {
+  return colors[Math.floor(Math.random() * colors.length)];
+};
 
 const Hero = () => {
   const { data: session } = useSession();
@@ -20,7 +48,7 @@ const Hero = () => {
             src={session?.user.image}
             alt="profile picture"
           />
-          <h1>{session?.user.name}</h1>
+          <h1 className="text-white">{session?.user.name}</h1>
           <ChevronDownIcon className="h-5 w-5" />
         </div>
       </header>
