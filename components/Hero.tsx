@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { playlistIdState, playlistState } from "../atoms/playlistAtom";
+import Songs from "./Songs";
 
 export const colors = [
   "from-slate-500",
@@ -55,7 +56,7 @@ const Hero = () => {
   }, [spotifyApi, playlistId]);
 
   return (
-    <div className="flex-grow">
+    <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide">
       <header className="absolute top-5 right-8">
         <div className="flex items-center bg-black space-x-3 opacity-90 hover:opacity-80 cursor-pointer rounded-full p-1 pr-2 text-white">
           <img
@@ -68,7 +69,7 @@ const Hero = () => {
         </div>
       </header>
       <section
-        className={`flex items-end space-x-7 bg-gradient-to-b to-black ${color} h-80 text-white padding-8`}
+        className={`flex items-end space-x-7 bg-gradient-to-b  ${color} to-black h-80 text-white p-8`}
       >
         <img
           className="h-44 w-44 shadow-2xl"
@@ -82,6 +83,9 @@ const Hero = () => {
           </h2>
         </div>
       </section>
+      <div>
+        <Songs />
+      </div>
     </div>
   );
 };
