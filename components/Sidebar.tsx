@@ -10,6 +10,8 @@ import {
 import useSpotify from "hooks/useSpotify";
 import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { playlistIdState } from "../atoms/playlistAtom";
 
 const Sidebar = () => {
   const { data: session } = useSession();
@@ -17,18 +19,19 @@ const Sidebar = () => {
   const [playlist, setPlaylist] = useState<
     SpotifyApi.PlaylistObjectSimplified[]
   >([]);
-  const [playlistId, setPlaylistId] = useState("");
+  const [playlistId, setPlaylistId] = useRecoilState(playlistIdState);
 
   useEffect(() => {
     if (spotifyApi.getAccessToken()) {
       spotifyApi.getUserPlaylists().then((data) => {
+        console.log(playlist);
         setPlaylist(data.body.items);
       });
     }
   }, [spotifyApi, session]);
 
   return (
-    <div className="text-gray-500 p-5 text-sm border-r border-gray-900 overflow-y-scroll scrollbar-hide h-screen">
+    <div className="text-gray-500 p-5 text-xs lg:text-sm border-r border-gray-900 overflow-y-scroll scrollbar-hide h-screen sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex">
       <div className="space-y-4">
         {/* First Section */}
         <button
