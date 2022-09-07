@@ -3,6 +3,7 @@ import Head from "next/head";
 import Sidebar from "@/components/Sidebar";
 import Hero from "@/components/Hero";
 import { getSession } from "next-auth/react";
+import Player from "@/components/Player";
 
 const Home: NextPage = () => {
   return (
@@ -16,6 +17,9 @@ const Home: NextPage = () => {
         <Sidebar />
         <Hero />
       </main>
+      <div className="sticky bottom-0">
+        <Player />
+      </div>
     </div>
   );
 };
