@@ -44,6 +44,6 @@ Among the implemented features, the most prominent are:
 <li> <a href="https://www.typescriptlang.org/">📜 TypeScript documentation - the permanently opened chrome tab</a>
 <li> <a href="https://next-auth.js.org/">🔒 NextAuth.js documentation</a>
 <li> <a href="https://stackoverflow.com/">🙃 StackOverflow, as usual</a>
-<li> <a href="https://www.youtube.com/c/SonnySangha"> The incredible map of the Tatra Mountains</a>
+<li> <a href="https://www.youtube.com/c/SonnySangha">▶️ The incredible Sonny Sangha YT channel</a>
 
 ## Thanks for reading!
