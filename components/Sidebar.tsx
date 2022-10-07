@@ -32,9 +32,12 @@ const Sidebar = () => {
     }
   }, [spotifyApi, session]);
 
-  useEffect(() => {
-    setModal((prev) => !prev);
-  }, [playlistId]);
+  const clickHandler = (id: string) => {
+    setPlaylistId(id);
+    if (modal) {
+      setModal((prev) => !prev);
+    }
+  };
 
   return (
     <div
@@ -93,7 +96,7 @@ const Sidebar = () => {
             <p
               key={playlist.id}
               className="cursor-pointer hover:text-white"
-              onClick={() => setPlaylistId(playlist.id)}
+              onClick={() => clickHandler(playlist.id)}
             >
               {playlist.name}
             </p>
