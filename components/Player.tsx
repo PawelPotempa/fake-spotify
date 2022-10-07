@@ -76,7 +76,7 @@ const Player = () => {
     <div className="h-24 bg-gradient-to-b from-black to-gray-900 text-white grid grid-cols-3 text-xs md:text-base px-2 lg:px-8">
       <div className="flex items-center space-x-4 ">
         <img
-          className="hidden md:inline h-10 w-10"
+          className="md:inline h-10 w-10"
           src={songInfo?.album.images?.[0].url}
           alt="album image"
         />
@@ -87,10 +87,10 @@ const Player = () => {
       </div>
 
       <div className="flex items-center justify-evenly">
-        <ArrowsRightLeftIcon className="button" />
+        <ArrowsRightLeftIcon className="hidden md:inline button" />
         <BackwardIcon
           className="button"
-          onClick={() => spotifyApi.skipToPrevious()}
+          // onClick={() => spotifyApi.skipToPrevious()}
         />
         {isPlaying ? (
           <PauseIcon onClick={handlePlayPause} className="button w-10 h-10" />
@@ -99,9 +99,9 @@ const Player = () => {
         )}
         <ForwardIcon
           className="button"
-          onClick={() => spotifyApi.skipToNext()}
+          // onClick={() => spotifyApi.skipToNext()}
         />
-        <ArrowUturnLeftIcon className="button" />
+        <ArrowUturnLeftIcon className="hidden md:inline button" />
       </div>
 
       <div className="flex items-center space-x-3 md:space-x-4 justify-end pr-5">
@@ -110,7 +110,7 @@ const Player = () => {
           className="button"
         />
         <input
-          className="w-14 md:w-28"
+          className="w-10 sm:w-24 md:w-28"
           type="range"
           value={volume}
           onChange={(e) => {

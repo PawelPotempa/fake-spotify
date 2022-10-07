@@ -1,5 +1,6 @@
 import useSpotify from "@/hooks/useSpotify";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import { ChevronDownIcon, Bars4Icon } from "@heroicons/react/24/outline";
+import { modalState } from "atoms/modalAtom";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
@@ -41,6 +42,7 @@ const Hero = () => {
   const [color, setColor] = useState("");
   const playlistId = useRecoilValue(playlistIdState);
   const [playlist, setPlaylist] = useRecoilState(playlistState);
+  const [modal, setModal] = useRecoilState(modalState);
 
   useEffect(() => {
     setColor(randomColor());
@@ -56,8 +58,12 @@ const Hero = () => {
   }, [spotifyApi, playlistId]);
 
   return (
-    <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide">
-      <header className="absolute top-5 right-8">
+    <div className="relative flex-grow h-screen overflow-y-scroll scrollbar-hide">
+      <header className="absolute flex justify-between top-2 px-2 w-full md:hidden">
+        <Bars4Icon
+          className="h-10 w-10 text-white"
+          onClick={() => setModal((prev) => !prev)}
+        />
         <div className="flex items-center bg-black space-x-3 opacity-90 hover:opacity-80 cursor-pointer rounded-full p-1 pr-2 text-white">
           <img
             className="rounded-full w-10 h-10"

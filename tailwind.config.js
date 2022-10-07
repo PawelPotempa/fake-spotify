@@ -6,7 +6,17 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        slidefromleft: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+      },
+    },
+    animation: {
+      slidefromleft: "slidefromleft 0.5s ease-in-out",
+    },
   },
   plugins: [
     plugin(function ({ addUtilities }) {

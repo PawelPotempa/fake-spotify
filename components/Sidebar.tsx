@@ -6,7 +6,9 @@ import {
   HeartIcon,
   RssIcon,
   ArrowLeftOnRectangleIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { modalState } from "atoms/modalAtom";
 import useSpotify from "hooks/useSpotify";
 import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -20,18 +22,33 @@ const Sidebar = () => {
     SpotifyApi.PlaylistObjectSimplified[]
   >([]);
   const [playlistId, setPlaylistId] = useRecoilState(playlistIdState);
+  const [modal, setModal] = useRecoilState(modalState);
 
   useEffect(() => {
     if (spotifyApi.getAccessToken()) {
       spotifyApi.getUserPlaylists().then((data) => {
-        console.log(playlist);
         setPlaylist(data.body.items);
       });
     }
   }, [spotifyApi, session]);
 
+  useEffect(() => {
+    setModal((prev) => !prev);
+  }, [playlistId]);
+
   return (
-    <div className="text-gray-500 p-5 text-xs lg:text-sm border-r border-gray-900 overflow-y-scroll scrollbar-hide h-screen sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex pb-36">
+    <div
+      className={`text-gray-500 p-5 text-xs lg:text-sm border-r border-gray-900 overflow-y-scroll scrollbar-hide h-screen sm:max-w-[12rem] lg:max-w-[15rem] ${
+        !modal && "hidden"
+      } ${
+        modal &&
+        "fixed h-full w-full z-10 bg-black text-lg animate-slidefromleft"
+      } md:inline-flex pb-36`}
+    >
+      <XMarkIcon
+        className="absolute top-4 right-4 text-gray-500 h-10 w-10"
+        onClick={() => setModal((prev) => !prev)}
+      />
       <div className="space-y-4">
         {/* First Section */}
         <button
@@ -68,7 +85,7 @@ const Sidebar = () => {
           <RssIcon className="h-5 w-5" />
           <p>Your Episodes</p>
         </button>
-        <hr className="bordert-[0.1px] border-gray-900" />
+        <hr className="border-[0.1px] border-gray-900" />
 
         {/* Playlists Section */}
         {playlist &&
